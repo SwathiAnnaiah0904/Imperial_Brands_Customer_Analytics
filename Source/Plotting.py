@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 import Cleaning as cln
-from sklearn.preprocessing import OneHotEncoder
 
 file_data = r"C:\Users\swath\OneDrive\Github\Imperial Brands\output\Engineered_customer_file.csv"
 df = pd.read_csv(file_data)
@@ -21,10 +20,10 @@ def plot_promotion_usage_vs_frequency(df):
     Parameters:
     df (DataFrame): The input dataframe that contains 'promotion_usage', 'Frequency', and 'Monetary' columns.
     """
-    # Step 1: Group the data by Promotion Usage and Frequency, calculating the mean Monetary for each group
+    # Group the data by Promotion Usage and Frequency, calculating the mean Monetary for each group
     df_grouped = df.groupby(['promotion_usage', 'Frequency']).agg({'Monetary': 'mean'}).reset_index()
 
-    # Step 2: Create a line plot for both promotion_usage = 0 and promotion_usage = 1
+    # Create a line plot for both promotion_usage = 0 and promotion_usage = 1
     plt.figure(figsize=(12, 6))
 
     # Plot for promotion_usage = 0
@@ -35,7 +34,6 @@ def plot_promotion_usage_vs_frequency(df):
     sns.lineplot(x='Frequency', y='Monetary', data=df_grouped[df_grouped['promotion_usage'] == 1], 
                  label='Promotion Usage = 1', color='red', marker='o')
 
-    # Adding title and labels
     plt.title('Promotion Usage vs Frequency of Purchases')
     plt.xlabel('Frequency of Purchases')
     plt.ylabel('Average Monetary Value')
@@ -54,10 +52,10 @@ def plot_loyalty_status_vs_frequency(df):
     Parameters:
     df (DataFrame): The input dataframe that contains 'loyalty_status', 'Frequency', and 'Monetary' columns.
     """
-    # Step 1: Group the data by Loyalty Status and Frequency, calculating the mean Monetary for each group 
+    # Group the data by Loyalty Status and Frequency, calculating the mean Monetary for each group 
     df_grouped = df.groupby(['loyalty_status', 'Frequency']).agg({'Monetary': 'mean'}).reset_index()
 
-    # Step 2: Create a line plot for each loyalty status (Gold, Silver, Regular)
+    # Create a line plot for each loyalty status (Gold, Silver, Regular)
     plt.figure(figsize=(12, 6))
 
     # Plot for loyalty_status = 'Gold'
@@ -69,7 +67,6 @@ def plot_loyalty_status_vs_frequency(df):
     # Plot for loyalty_status = 'Regular'
     sns.lineplot(x='Frequency', y='Monetary', data=df_grouped[df_grouped['loyalty_status'] == 'Regular'], label='Regular', color='blue', marker='o')
 
-    # Adding title and labels
     plt.title('Loyalty Status vs Frequency of Purchases')
     plt.xlabel('Frequency of Purchases')
     plt.ylabel('Average Monetary Value')
@@ -87,7 +84,7 @@ def plot_age_based_segmentation_and_satisfaction(df):
     Parameters:
     df (DataFrame): The input dataframe that contains 'age_group' and 'satisfaction_score' columns.
     """
-    # Step 1: Plot for Age-based Segmentation
+    # Plot for Age-based Segmentation
     plt.figure(figsize=(10, 6))
     sns.countplot(x='age_group', data=df, palette='viridis')
     plt.title('Customer Distribution by Age Group')
@@ -95,7 +92,6 @@ def plot_age_based_segmentation_and_satisfaction(df):
     plt.ylabel('Number of Customers')
     plt.show()
 
-    # Step 3: Boxplot to compare satisfaction score across Age Groups
     plt.figure(figsize=(12, 6))
     sns.boxplot(x='age_group', y='satisfaction_score', data=df, palette='Set2')
     plt.title('Satisfaction Score Distribution by Age Group')
@@ -114,7 +110,7 @@ def plot_income_based_segmentation_and_satisfaction(df):
     Parameters:
     df (DataFrame): The input dataframe that contains 'income_group' and 'satisfaction_score' columns.
     """
-    # Step 2: Plot for Income-based Segmentation
+    # Plot for Income-based Segmentation
     plt.figure(figsize=(10, 6))
     sns.countplot(x='income_group', data=df, palette='coolwarm')
     plt.title('Customer Distribution by Income Group')
@@ -122,7 +118,6 @@ def plot_income_based_segmentation_and_satisfaction(df):
     plt.ylabel('Number of Customers')
     plt.show()
 
-    # Step 4: Boxplot to compare satisfaction score across Income Groups
     plt.figure(figsize=(12, 6))
     sns.boxplot(x='income_group', y='satisfaction_score', data=df, palette='Set1')
     plt.title('Satisfaction Score Distribution by Income Group')

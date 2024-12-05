@@ -11,9 +11,9 @@ df_orders = pd.read_csv(file_orders)
 df_customers = pd.read_csv(file_customers)
 
 # Cleaning orders data 
-df_orders['Order Date'] = pd.to_datetime(df_orders['Order Date']) #changed date type to date column 
+df_orders['Order Date'] = pd.to_datetime(df_orders['Order Date']) #
 df_orders['id'] = df_orders['id'].astype(int)
-df_orders['Value'] = df_orders['Value'].replace({'$': '', '€': '', '£': '', 'GBP': ''}, regex=True)  #Unified Value column for numeric col type
+df_orders['Value'] = df_orders['Value'].replace({'$': '', '€': '', '£': '', 'GBP': ''}, regex=True) 
 df_orders['Value'] = pd.to_numeric(df_orders['Value'], errors='coerce')
 
 # Merging Orders and customer data into one dataframe

@@ -9,7 +9,6 @@ import sys
 sys.path.append(os.path.abspath(r'C:\Users\swath\OneDrive\Github\Imperial Brands'))
 import Cleaning as cln
 
-# Load your dataset
 file_data = r"C:\Users\swath\OneDrive\Github\Imperial Brands\output\Engineered_customer_file.csv"
 df = pd.read_csv(file_data)
 
@@ -27,26 +26,25 @@ def perform_clustering_analysis(df, features, n_clusters=2, cluster_range=(2, 11
     - n_clusters: Initial number of clusters for KMeans (default is 2).
     - cluster_range: Range of cluster numbers for silhouette score analysis (default is 2 to 10).
     """
-    # Step 1: Feature scaling
+    # Feature scaling
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(df[features])
 
-    # Step 2: KMeans clustering
+    # KMeans clustering
     kmeans = KMeans(n_clusters=n_clusters, random_state=42)
     df['cluster'] = kmeans.fit_predict(scaled_features)
 
-    # Step 3: Find optimal number of clusters using Silhouette Method
     sil_scores = []
-    for k in range(cluster_range[0], cluster_range[1]):  # Try a range of k from cluster_range[0] to cluster_range[1]
+    for k in range(cluster_range[0], cluster_range[1]): 
         kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
         kmeans.fit(scaled_features)
         sil_scores.append(silhouette_score(scaled_features, kmeans.labels_))
 
-    # Step 4: Calculate and print silhouette score for current clustering
+    # Calculate and print silhouette score for current clustering
     silhouette_avg = silhouette_score(scaled_features, df['cluster'])
     print(f'Silhouette Score: {silhouette_avg}')
 
-    # Step 5: Plot Silhouette Scores for different k values
+
     plt.figure(figsize=(10, 6))
     plt.plot(range(cluster_range[0], cluster_range[1]), sil_scores, marker='o')
     plt.title('Silhouette Score for Different k')
@@ -54,7 +52,6 @@ def perform_clustering_analysis(df, features, n_clusters=2, cluster_range=(2, 11
     plt.ylabel('Silhouette Score')
     plt.show()
 
-    # Step 6: Analyze the clusters
     cluster_summary = df.groupby('cluster').agg({
         'income': 'mean',
         'Monetary': 'mean',
@@ -71,7 +68,7 @@ def perform_clustering_analysis(df, features, n_clusters=2, cluster_range=(2, 11
     })
     print(cluster_summary_demo)
 
-    # Step 7: Plot Cluster Summary with table
+
     def plot_cluster_summary_with_table(cluster_summary):
         """
         This function visualizes the cluster summary by creating a bar plot for each feature in the summary.

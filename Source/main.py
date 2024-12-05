@@ -11,7 +11,7 @@ import frequency_monetary_cluster as fmc
 import demo_cluster as dc
 
 
-# Assuming the data is already loaded and preprocessed as described in the code provided earlier
+
 file_data = r"C:\Users\swath\OneDrive\Github\Imperial Brands\output\Engineered_customer_file.csv"
 df = pd.read_csv(file_data)
 cln.preprocess_data(df) 

@@ -15,7 +15,6 @@ def plot_monthly_revenue(df):
     print("\nMonthly Revenue Trend:")
     print(monthly_value)
 
-    # Plotting Monthly Revenue Trend
     plt.figure(figsize=(10, 6))
     monthly_value.plot(kind='line', marker='o', color='orange')
     plt.title('Monthly Revenue Trend')
@@ -31,14 +30,12 @@ def plot_loyalty_status_vs_order_value(df):
     print("\nAverage Order Value by Loyalty Status:")
     print(loyalty_value)
 
-    # Plotting Loyalty Status vs Order Value with values on top of bars
     plt.figure(figsize=(8, 6))
     ax = sns.barplot(x=loyalty_value.index, y=loyalty_value.values, palette='Blues')
     plt.title('Average Order Value by Loyalty Status')
     plt.xlabel('Loyalty Status')
     plt.ylabel('Average Order Value')
 
-    # Adding the values on top of the bars
     for p in ax.patches:
         ax.annotate(f'{p.get_height():.2f}', 
                     (p.get_x() + p.get_width() / 2., p.get_height()), 
@@ -54,14 +51,12 @@ def plot_promotion_usage_vs_order_value(df):
     print("\nAverage Order Value by Promotion Usage:")
     print(promotion_value)
 
-    # Plotting Promotion Usage vs Order Value with values on top of bars
     plt.figure(figsize=(8, 6))
     ax = sns.barplot(x=promotion_value.index, y=promotion_value.values, palette='Greens')
     plt.title('Average Order Value by Promotion Usage')
     plt.xlabel('Promotion Usage')
     plt.ylabel('Average Order Value')
 
-    # Adding the values on top of the bars
     for p in ax.patches:
         ax.annotate(f'{p.get_height():.2f}', 
                     (p.get_x() + p.get_width() / 2., p.get_height()), 
@@ -77,14 +72,12 @@ def plot_satisfaction_score_vs_order_value(df):
     print("\nAverage Order Value by Satisfaction Score:")
     print(satisfaction_value)
 
-    # Plotting Satisfaction Scores vs Order Value with values on top of the points
     plt.figure(figsize=(8, 6))
     ax = sns.lineplot(x=satisfaction_value.index, y=satisfaction_value.values, marker='o', color='purple')
     plt.title('Average Order Value by Satisfaction Score')
     plt.xlabel('Satisfaction Score')
     plt.ylabel('Average Order Value')
 
-    # Adding the values on top of the points
     for x, y in zip(satisfaction_value.index, satisfaction_value.values):
         ax.text(x, y, f'{y:.2f}', ha='center', va='bottom', fontsize=12, color='black')
     plt.show()
@@ -93,20 +86,17 @@ def plot_satisfaction_score_vs_order_value(df):
 
 # Function for Region vs Order Value
 def plot_region_vs_order_value(df):
-    # Grouping by region and calculating the average order value
     region_value = df.groupby('region')['Value'].mean()
     
     print("\nAverage Order Value by Region:")
     print(region_value)
 
-    # Plotting Region vs Order Value with values on top of bars
     plt.figure(figsize=(8, 6))
     ax = sns.barplot(x=region_value.index, y=region_value.values, palette='Set2')
     plt.title('Average Order Value by Region')
     plt.xlabel('Region')
     plt.ylabel('Average Order Value')
 
-    # Adding the values on top of the bars
     for p in ax.patches:
         ax.annotate(f'{p.get_height():.2f}', 
                     (p.get_x() + p.get_width() / 2., p.get_height()), 
@@ -118,20 +108,18 @@ def plot_region_vs_order_value(df):
 
 # Function for Region vs Order Count
 def plot_region_vs_order_count(df):
-    # Grouping by region and counting the number of orders
+
     region_order_count = df.groupby('region').size()
     
     print("\nOrder Count by Region:")
     print(region_order_count)
 
-    # Plotting Region vs Order Count with values on top of bars
     plt.figure(figsize=(8, 6))
     ax = sns.barplot(x=region_order_count.index, y=region_order_count.values, palette='Set2')
     plt.title('Order Count by Region')
     plt.xlabel('Region')
     plt.ylabel('Order Count')
 
-    # Adding the values on top of the bars
     for p in ax.patches:
         ax.annotate(f'{p.get_height():.0f}', 
                     (p.get_x() + p.get_width() / 2., p.get_height()), 
@@ -144,20 +132,18 @@ def plot_region_vs_order_count(df):
 
 # Function for Loyalty Status vs Order Count
 def plot_loyalty_status_vs_order_count(df):
-    # Grouping by loyalty_status and counting the number of orders
     loyalty_order_count = df.groupby('loyalty_status').size()
     
     print("\nOrder Count by Loyalty Status:")
     print(loyalty_order_count)
 
-    # Plotting Loyalty Status vs Order Count with values on top of bars
     plt.figure(figsize=(8, 6))
     ax = sns.barplot(x=loyalty_order_count.index, y=loyalty_order_count.values, palette='Set3')
     plt.title('Order Count by Loyalty Status')
     plt.xlabel('Loyalty Status')
     plt.ylabel('Order Count')
 
-    # Adding the values on top of the bars
+
     for p in ax.patches:
         ax.annotate(f'{p.get_height():.0f}', 
                     (p.get_x() + p.get_width() / 2., p.get_height()), 

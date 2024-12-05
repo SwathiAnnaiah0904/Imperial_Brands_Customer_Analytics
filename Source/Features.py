@@ -27,16 +27,12 @@ def engineer_customer_data(data, output_directory):
     customer_data = pd.merge(customer_data, frequency, on='id', how='left')
     customer_data = pd.merge(customer_data, monetary, on='id', how='left')
 
-    # Handle missing values (if any)
     customer_data.fillna(0, inplace=True)
 
-    # Ensure the directory exists
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
-    # Save the dataframe to CSV
     customer_data.to_csv(os.path.join(output_directory, 'Engineered_customer_file.csv'), index=False)
     
-    # Return the engineered customer data for further use if needed
     return customer_data
 

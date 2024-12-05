@@ -11,7 +11,7 @@ sys.path.append(os.path.abspath(r'C:\Users\swath\OneDrive\Github\Imperial Brands
 import Features as Fts
 import Cleaning as cln
 
-# Load the dataset
+
 file_data = r"C:\Users\swath\OneDrive\Github\Imperial Brands\output\merged_file.csv"
 data = pd.read_csv(file_data)
 output_directory = r'C:\Users\swath\OneDrive\Github\Imperial Brands\output'
@@ -41,7 +41,7 @@ def perform_customer_clustering(data, n_clusters=3):
     # Select relevant features for clustering
     features = data[['Frequency', 'Monetary', 'age', 'income', 'satisfaction_score']]
 
-    # Standardize the features to ensure they have a mean of 0 and a standard deviation of 1
+    # Standardize the features
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(features)
 
@@ -52,14 +52,13 @@ def perform_customer_clustering(data, n_clusters=3):
         kmeans.fit(scaled_features)
         inertia.append(kmeans.inertia_)
 
-    # Plot the elbow curve
     plt.plot(range(1, 11), inertia, marker='o')
     plt.title('Elbow Method For Optimal K')
     plt.xlabel('Number of clusters (K)')
     plt.ylabel('Inertia')
     plt.show()
 
-    # Apply KMeans clustering with the specified number of clusters (n_clusters)
+    # Apply KMeans clustering
     kmeans = KMeans(n_clusters=n_clusters, random_state=42)
     data['Cluster'] = kmeans.fit_predict(scaled_features)
 
@@ -67,10 +66,7 @@ def perform_customer_clustering(data, n_clusters=3):
     silhouette_avg = silhouette_score(scaled_features, data['Cluster'])
     print(f'Silhouette Score: {silhouette_avg}')
 
-    # Inspect the resulting clusters
-    # print(data[['id', 'Frequency', 'Monetary', 'Cluster']].head())
 
-    # Group by clusters and calculate mean of features to understand the segments
     cluster_analysis = data.groupby('Cluster')[['Frequency', 'Monetary', 'age', 'income', 'satisfaction_score']].mean()
     print(cluster_analysis)
 
@@ -83,7 +79,6 @@ def perform_customer_clustering(data, n_clusters=3):
     }
     data['Segment_Label'] = data['Cluster'].map(cluster_labels)
 
-    # Create a scatter plot to visualize the clusters
     plt.figure(figsize=(8, 6))
     sns.scatterplot(x=data['Frequency'], y=data['Monetary'], hue=data['Segment_Label'], palette='Set2', s=100, alpha=0.7)
     plt.title('Customer Segments Based on Frequency and Monetary')
@@ -92,7 +87,6 @@ def perform_customer_clustering(data, n_clusters=3):
     plt.legend(title='Cluster')
     plt.show()
 
-    # Return the customer data with added segments, and cluster analysis
     return data, cluster_analysis, silhouette_avg
 
 customer_data, cluster_analysis, silhouette_avg = perform_customer_clustering(customer_data)
